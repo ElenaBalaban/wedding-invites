@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ответы гостей — Александр и Юлия</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Source Sans Pro', 'Segoe UI', Arial, sans-serif;
+      background: #faf8f5;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: #c40000;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px 30px;
+    }
+    .header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: #fff;
+      font-weight: 400;
+      padding-bottom: 6px;
+    }
+    .header p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+
+
+    /* Table container */
+    .table-wrap {
+      max-width: 700px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    .table-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28px;
+      text-align: center;
+      padding: 10px 0 20px;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    thead th {
+      background: #f5f0eb;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 14px 20px;
+      text-align: left;
+    }
+    thead th:last-child { text-align: center; }
+    tbody td {
+      padding: 14px 20px;
+      font-size: 16px;
+      border-top: 1px solid #f0ece7;
+      vertical-align: middle;
+    }
+    tbody tr:hover { background: #fdf9f5; }
+    .col-num {
+      width: 40px;
+      color: #aaa;
+      font-size: 14px;
+      text-align: center;
+    }
+    .col-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: #333;
+    }
+    .col-answer {
+      text-align: center;
+      font-weight: 600;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .badge-yes {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .badge-no {
+      background: #ffebee;
+      color: #c62828;
+    }
+    .col-time {
+      font-size: 13px;
+      color: #aaa;
+      white-space: nowrap;
+    }
+
+    /* Loading / empty */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      color: #999;
+    }
+    .spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid #eee;
+      border-top-color: #c40000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .refresh-note {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: #aaa;
+    }
+    .refresh-note a {
+      color: #c40000;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 36px; }
+      thead th, tbody td { padding: 10px 12px; }
+      .col-time { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Ответы гостей</h1>
+    <p>Свадьба Александра и Юлии — 24 апреля 2026</p>
+  </div>
+
+  <div class="table-wrap" style="margin-top: 30px;">
+    <div id="content">
+      <div class="loading">
+        <div class="spinner"></div>
+        <div>Загрузка данных…</div>
+      </div>
+    </div>
+    <div class="refresh-note">
+      Данные обновляются при загрузке страницы · <a onclick="location.reload()">Обновить</a>
+    </div>
+  </div>
+
+  <script>
+    const SHEET_ID = '1SBSZiyFuzX_kxqkm0z-hXvu6anMnVshdIPMTBwVc264';
+
+    // JSONP callback — Google Sheets calls this function
+    function google_response(data) {
+      try {
+        const rows = data.table.rows;
+
+        if (!rows || rows.length === 0) {
+          document.getElementById('content').innerHTML =
+            '<div class="loading">Пока нет ответов</div>';
+          return;
+        }
+
+        // Parse all rows
+        const allEntries = rows.map(row => {
+          const name = row.c[1]?.v || '—';
+          const answer = row.c[2]?.v || '—';
+          return { name, answer };
+        });
+
+        // Deduplicate: keep last answer per name
+        const lastByName = new Map();
+        allEntries.forEach(entry => {
+          lastByName.set(entry.name, entry.answer);
+        });
+
+        const guests = Array.from(lastByName, ([name, answer]) => ({ name, answer }));
+
+        // Build table
+        let html = `
+          <table>
+            <thead>
+              <tr>
+                <th class="col-num">№</th>
+                <th>Имя</th>
+                <th style="text-align:center">Ответ</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+        guests.forEach((g, i) => {
+          const badgeClass = g.answer === 'Да' ? 'badge-yes' : 'badge-no';
+          html += `
+              <tr>
+                <td class="col-num">${i + 1}</td>
+                <td class="col-name">${escapeHtml(g.name)}</td>
+                <td class="col-answer"><span class="badge ${badgeClass}">${escapeHtml(g.answer)}</span></td>
+              </tr>`;
+        });
+
+        html += '</tbody></table>';
+        document.getElementById('content').innerHTML = html;
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('content').innerHTML =
+          '<div class="loading">Ошибка загрузки данных</div>';
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Load via JSONP (no CORS issues, works from file://)
+    function loadResponses() {
+      // Remove old script if refreshing
+      const old = document.getElementById('gsheet-script');
+      if (old) old.remove();
+
+      const script = document.createElement('script');
+      script.id = 'gsheet-script';
+      script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:google_response`;
+      script.onerror = function() {
+        document.getElementById('content').innerHTML =
+          '<div class="loading">Не удалось загрузить данные. Проверьте интернет-соединение.</div>';
+      };
+      document.body.appendChild(script);
+    }
+
+    loadResponses();
+  </script>
+
+</body>
+</html>
