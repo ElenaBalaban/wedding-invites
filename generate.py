@@ -80,7 +80,10 @@ def generate():
         gid = guest['id']
         names = guest['names']
         greeting = make_greeting(names)
-        filename = make_filename(gid, names)
+        if 'slug' in guest:
+            filename = f"{gid:02d}-{guest['slug']}.html"
+        else:
+            filename = make_filename(gid, names)
 
         html = html_base
         # Replace guest name in hidden form field
