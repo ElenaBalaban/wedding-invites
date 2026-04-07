@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список гостей — Александр и Юлия</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Source Sans Pro', 'Segoe UI', Arial, sans-serif;
+      background: #faf8f5;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #c40000;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px 30px;
+    }
+    .header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: #fff;
+      font-weight: 400;
+      padding-bottom: 6px;
+    }
+    .header p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .table-wrap {
+      margin: 20px auto 60px;
+      padding: 0 10px;
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    thead th {
+      background: #f5f0eb;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 12px 12px;
+      text-align: left;
+    }
+    tbody td {
+      padding: 10px 12px;
+      font-size: 14px;
+      border-top: 1px solid #f0ece7;
+      vertical-align: top;
+    }
+    tbody tr:hover { background: #fdf9f5; }
+
+    .col-name {
+      width: 33%;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: #333;
+    }
+    .col-name .num {
+      color: #aaa;
+      font-size: 13px;
+      margin-right: 4px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 0;
+      font-size: 13px;
+    }
+    .info-row + .info-row {
+      border-top: 1px dashed #f0ece7;
+      padding-top: 5px;
+      margin-top: 2px;
+    }
+    .info-val {
+      font-family: 'Source Sans Pro', monospace;
+      color: #333;
+      word-break: break-all;
+    }
+    .info-row a {
+      color: #c40000;
+      text-decoration: none;
+    }
+    .info-row a:hover { text-decoration: underline; }
+
+    .copy-btn {
+      display: inline-block;
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 2px 7px;
+      font-size: 11px;
+      color: #999;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { border-color: #c40000; color: #c40000; }
+    .copy-btn.copied { border-color: #2e7d32; color: #2e7d32; }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 36px; }
+      .header { padding: 30px 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Список гостей</h1>
+    <p>Свадьба Александра и Юлии — 24 апреля 2026</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Имя</th>
+          <th>Телефон / Ссылка</th>
+        </tr>
+      </thead>
+      <tbody id="guest-table"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const guests = [
+      { "id": 1,  "names": "Ярослав и Елена", "phone": "3476330811", "url": "https://elenabalaban.github.io/wedding-invites/guests/01-yaroslav-i-elena" },
+      { "id": 2,  "names": "Имран и Алёна", "phone": "9292049674", "url": "https://elenabalaban.github.io/wedding-invites/guests/02-imran-i-alyona" },
+      { "id": 3,  "names": "Наташенька", "phone": "3478444301", "url": "https://elenabalaban.github.io/wedding-invites/guests/03-natashenka" },
+      { "id": 4,  "names": "Артём и Кристина", "phone": "3477280828", "url": "https://elenabalaban.github.io/wedding-invites/guests/04-artyom-i-kristina" },
+      { "id": 5,  "names": "Марик и Алла", "phone": "3474393599", "url": "https://elenabalaban.github.io/wedding-invites/guests/05-marik-i-alla" },
+      { "id": 6,  "names": "Давид и Николь", "phone": "7186160128", "url": "https://elenabalaban.github.io/wedding-invites/guests/06-david-i-nikol" },
+      { "id": 7,  "names": "Валентин и Валентина", "phone": "7183443234", "url": "https://elenabalaban.github.io/wedding-invites/guests/07-valentin-i-valentina" },
+      { "id": 8,  "names": "Маурицио и Кристина", "phone": "9178591550", "url": "https://elenabalaban.github.io/wedding-invites/guests/08-mauritsio-i-kristina" },
+      { "id": 9,  "names": "Василий и Анна", "phone": "5146908932", "url": "https://elenabalaban.github.io/wedding-invites/guests/09-vasiliy-i-anna" },
+      { "id": 10, "names": "Александр, Фируза и Амелия", "phone": "7189153565", "url": "https://elenabalaban.github.io/wedding-invites/guests/10-aleksandr-firuza-i-ameliya" },
+      { "id": 11, "names": "Искандер и Гуля", "phone": "6465795217", "url": "https://elenabalaban.github.io/wedding-invites/guests/11-iskander-i-gulya" },
+      { "id": 12, "names": "Дима и Дина", "phone": "7188657376", "url": "https://elenabalaban.github.io/wedding-invites/guests/12-dima-i-dina" },
+      { "id": 13, "names": "Олег и Наталья", "phone": "3475757729", "url": "https://elenabalaban.github.io/wedding-invites/guests/13-oleg-i-natalya" },
+      { "id": 14, "names": "Олег", "phone": "2036093131", "url": "https://elenabalaban.github.io/wedding-invites/guests/14-oleg" },
+      { "id": 15, "names": "Гена и Белла", "phone": "3474810975", "url": "https://elenabalaban.github.io/wedding-invites/guests/15-gena-i-bella" },
+      { "id": 16, "names": "Владимир и Лилия", "phone": "9298668101", "url": "https://elenabalaban.github.io/wedding-invites/guests/16-vladimir-i-liliya" },
+      { "id": 17, "names": "Владимир и Ольга", "phone": "7183142347", "url": "https://elenabalaban.github.io/wedding-invites/guests/17-vladimir-i-olga" },
+      { "id": 18, "names": "Владимир", "phone": "9292006666", "url": "https://elenabalaban.github.io/wedding-invites/guests/18-vladimir" },
+      { "id": 19, "names": "Андрей и Алёна", "phone": "3479250746", "url": "https://elenabalaban.github.io/wedding-invites/guests/19-andrey-i-alyona" }
+    ];
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'копировать';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    }
+
+    const tbody = document.getElementById('guest-table');
+    const slug = url => url.replace('https://elenabalaban.github.io/wedding-invites/guests/', '');
+
+    guests.forEach(g => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="col-name"><span class="num">${g.id}.</span> ${g.names}</td>
+        <td>
+          <div class="info-row">
+            <span class="info-val">${g.phone}</span>
+            <button class="copy-btn" onclick="copyText('${g.phone}', this)">копировать</button>
+          </div>
+          <div class="info-row">
+            <a href="${g.url}" target="_blank" class="info-val">${slug(g.url)}</a>
+            <button class="copy-btn" onclick="copyText('${g.url}', this)">копировать</button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  </script>
+
+</body>
+</html>

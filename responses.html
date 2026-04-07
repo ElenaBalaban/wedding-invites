@@ -40,18 +40,9 @@
 
     /* Table container */
     .table-wrap {
-      max-width: 700px;
       margin: 0 auto 60px;
-      padding: 0 20px;
+      padding: 0 10px;
     }
-    .table-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 28px;
-      text-align: center;
-      padding: 10px 0 20px;
-      color: #333;
-    }
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -63,43 +54,51 @@
     thead th {
       background: #f5f0eb;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 700;
       color: #555;
       text-transform: uppercase;
       letter-spacing: 1px;
-      padding: 14px 20px;
+      padding: 10px 12px;
       text-align: left;
     }
-    thead th:last-child { text-align: center; }
+    thead th:nth-child(2) { text-align: center; }
     tbody td {
-      padding: 14px 20px;
-      font-size: 16px;
+      padding: 10px 12px;
+      font-size: 14px;
       border-top: 1px solid #f0ece7;
       vertical-align: middle;
     }
     tbody tr:hover { background: #fdf9f5; }
-    .col-num {
-      width: 40px;
-      color: #aaa;
-      font-size: 14px;
-      text-align: center;
-    }
     .col-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 19px;
+      font-size: 15px;
       font-weight: 600;
       color: #333;
     }
     .col-answer {
       text-align: center;
       font-weight: 600;
+      white-space: nowrap;
+    }
+    .col-comment {
+      font-size: 13px;
+      color: #666;
+      font-style: italic;
+    }
+    .col-comment .comment-item {
+      padding: 2px 0;
+    }
+    .col-comment .comment-item + .comment-item {
+      border-top: 1px dashed #e8e4df;
+      margin-top: 4px;
+      padding-top: 4px;
     }
     .badge {
       display: inline-block;
-      padding: 4px 16px;
+      padding: 3px 12px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
@@ -110,11 +109,6 @@
     .badge-no {
       background: #ffebee;
       color: #c62828;
-    }
-    .col-time {
-      font-size: 13px;
-      color: #aaa;
-      white-space: nowrap;
     }
 
     /* Loading / empty */
@@ -152,8 +146,12 @@
     /* Responsive */
     @media (max-width: 600px) {
       .header h1 { font-size: 36px; }
-      thead th, tbody td { padding: 10px 12px; }
-      .col-time { display: none; }
+      .header { padding: 30px 16px 20px; }
+      thead th { font-size: 11px; padding: 8px 8px; }
+      tbody td { padding: 8px 8px; font-size: 13px; }
+      .col-name { font-size: 14px; }
+      .col-comment { font-size: 12px; }
+      .badge { font-size: 11px; padding: 2px 8px; }
     }
   </style>
 </head>
@@ -194,36 +192,49 @@
         const allEntries = rows.map(row => {
           const name = row.c[1]?.v || '—';
           const answer = row.c[2]?.v || '—';
-          return { name, answer };
+          const comment = row.c[3]?.v || '';
+          return { name, answer, comment };
         });
 
-        // Deduplicate: keep last answer per name
+        // Deduplicate: keep last answer per name, collect ALL non-empty comments
         const lastByName = new Map();
         allEntries.forEach(entry => {
-          lastByName.set(entry.name, entry.answer);
+          if (!lastByName.has(entry.name)) {
+            lastByName.set(entry.name, { answer: entry.answer, comments: [] });
+          } else {
+            lastByName.get(entry.name).answer = entry.answer;
+          }
+          if (entry.comment.trim()) {
+            lastByName.get(entry.name).comments.push(entry.comment.trim());
+          }
         });
 
-        const guests = Array.from(lastByName, ([name, answer]) => ({ name, answer }));
+        const guests = Array.from(lastByName, ([name, data]) => ({
+          name, answer: data.answer, comments: data.comments
+        }));
 
         // Build table
         let html = `
           <table>
             <thead>
               <tr>
-                <th class="col-num">№</th>
                 <th>Имя</th>
                 <th style="text-align:center">Ответ</th>
+                <th>Комментарий</th>
               </tr>
             </thead>
             <tbody>`;
 
         guests.forEach((g, i) => {
           const badgeClass = g.answer === 'Да' ? 'badge-yes' : 'badge-no';
+          const commentsHtml = g.comments.length
+            ? g.comments.map(c => `<div class="comment-item">${escapeHtml(c)}</div>`).join('')
+            : '';
           html += `
               <tr>
-                <td class="col-num">${i + 1}</td>
                 <td class="col-name">${escapeHtml(g.name)}</td>
                 <td class="col-answer"><span class="badge ${badgeClass}">${escapeHtml(g.answer)}</span></td>
+                <td class="col-comment">${commentsHtml}</td>
               </tr>`;
         });
 
