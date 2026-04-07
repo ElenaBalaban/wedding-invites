@@ -25,7 +25,7 @@ TRANSLIT = {
 }
 
 # Known single female names (for "Дорогая" instead of "Дорогой")
-FEMALE_NAMES = {"Наташенька"}
+FEMALE_NAMES = {"Наташенька", "Мамочка Лена"}
 
 
 def transliterate(text):
