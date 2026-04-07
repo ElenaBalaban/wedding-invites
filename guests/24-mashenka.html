@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Свадебное приглашение — Александр и Юлия</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      background: #fff;
+      line-height: 1.7em;
+      font-weight: 500;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: #2ea3f2; text-decoration: none; }
+    h1, h2, h3, h4, h5, h6 { color: #333; padding-bottom: 10px; line-height: 1em; font-weight: 500; }
+    p { padding-bottom: 1em; }
+    p:last-child { padding-bottom: 0; }
+
+    /* ===== LAYOUT ===== */
+    .section { padding: 54px 0; background-color: #fff; background-size: cover; background-position: center; }
+    .section-fullwidth { padding: 0; }
+    .container { width: 80%; max-width: 1080px; margin: 0 auto; position: relative; }
+    .row { padding: 27px 0; display: flex; flex-wrap: wrap; }
+    .row::after { content: ""; display: table; clear: both; }
+    .col-full { width: 100%; }
+    .col-third { width: 29.667%; margin-right: 5.5%; }
+    .col-third:last-child, .col-third.last { margin-right: 0; }
+    .text-center { text-align: center; }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+
+    /* ===== ANIMATIONS ===== */
+    .animate { opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease; }
+    .animate.visible { opacity: 1; transform: translateY(0) scale(1); }
+    .animate.fade { transform: none; }
+    .animate.zoom { transform: scale(0.8); }
+    .animate.zoom.visible { transform: scale(1); }
+    .animate.slide-bottom { transform: translateY(40px); }
+    .animate.slide-bottom.visible { transform: translateY(0); }
+    .animate.slide-left { transform: translateX(-40px); }
+    .animate.slide-left.visible { transform: translateX(0); }
+    .animate.fold { transform: perspective(400px) rotateY(90deg); }
+    .animate.fold.visible { transform: perspective(400px) rotateY(0); }
+
+    /* ===== SECTION 1: HERO WITH NAMES ===== */
+    .hero-section {
+      background: #fff;
+      padding: 0;
+    }
+    .fingerprint-heart-container {
+      text-align: center;
+      background: white;
+      margin: 0;
+      padding: 20px 10px 0;
+    }
+    .hero-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 70px;
+      color: #c40000;
+      text-align: center;
+      margin: 0;
+      padding-bottom: 5px;
+      line-height: 1.2;
+    }
+    .hero-date {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 20px;
+      color: #000;
+      margin: 10px 0 20px;
+      letter-spacing: 2px;
+      padding-bottom: 0;
+    }
+    .fingerprint-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 60px;
+    }
+    .fingerprint {
+      width: 120px;
+      opacity: 0;
+      animation: fadeInFP 2s ease forwards;
+      display: inline-block;
+    }
+    .fingerprint-left {
+      transform: rotate(-20deg) translateX(40px);
+      animation-delay: 0.8s;
+    }
+    .fingerprint-right {
+      transform: rotate(45deg) translateX(-30px);
+      animation-delay: 1s;
+    }
+    @keyframes fadeInFP { to { opacity: 0.9; } }
+
+    /* ===== HERO IMAGE ===== */
+    .hero-image-wrap {
+      text-align: center;
+      padding: 0;
+      animation: fadeInHero 1.25s ease-in-out 1.2s both;
+    }
+    .hero-image-wrap img {
+      width: auto;
+      max-width: 100%;
+      height: 622px;
+      object-fit: cover;
+      margin: 0 auto;
+      border-radius: 20px;
+    }
+    @keyframes fadeInHero { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ===== SECTION: TITLE HEADINGS ===== */
+    .wedding-heading {
+      font-family: 'Great Vibes', cursive;
+      color: #c40000;
+      font-size: 55px;
+      margin: 0;
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+    }
+    .wedding-heading span {
+      display: inline-block;
+    }
+    @keyframes fadeLetter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== INVITATION TEXT ===== */
+    .invitation-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      text-align: center;
+      padding: 0 10%;
+      line-height: 1.8;
+    }
+    .invitation-text strong {
+      font-weight: 700;
+    }
+
+    /* ===== LOCATION DETAILS ===== */
+    .location-section .row { padding: 10px 0; }
+    .detail-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 2px 0;
+    }
+    .detail-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      color: #333;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .detail-value {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      color: #666;
+    }
+
+    /* ===== FULLWIDTH IMAGE ===== */
+    .fullwidth-image { width: 100%; line-height: 0; }
+    .fullwidth-image img { width: 100%; }
+
+    /* ===== MAP BUTTON ===== */
+    .button-wrap { text-align: center; padding: 13px 0 26px; }
+    .btn-map {
+      display: inline-block;
+      font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff !important;
+      background-color: #c40000;
+      border: none;
+      border-radius: 100px;
+      padding: 12px 24px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn-map:hover { background-color: #a00; transform: scale(1.05); }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-section {
+      background-color: #c40000;
+      padding: 40px 0;
+      text-align: center;
+    }
+    .headline-block {
+      text-align: center;
+      margin: 0 0 30px;
+      position: relative;
+    }
+    .headline-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+    .headline-main.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0;
+      flex-wrap: wrap;
+      padding: 20px 0;
+    }
+    .countdown-timer .cd-section {
+      display: inline-block;
+      text-align: center;
+      width: 17%;
+      max-width: 160px;
+      vertical-align: top;
+    }
+    .countdown-timer .cd-value {
+      font-size: 54px;
+      line-height: 54px;
+      color: #fff;
+      font-weight: 400;
+      padding: 0;
+    }
+    .countdown-timer .cd-label {
+      font-size: 14px;
+      line-height: 25px;
+      color: #fff;
+      padding: 0;
+    }
+    .countdown-timer .cd-sep {
+      display: inline-block;
+      color: #fff;
+      font-size: 54px;
+      line-height: 54px;
+      vertical-align: top;
+      padding: 0 5px;
+    }
+    .countdown-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      color: #fff;
+      text-align: center;
+      padding: 20px 10% 0;
+      line-height: 1.8;
+    }
+    .countdown-text strong { font-weight: 700; }
+
+    /* ===== CONFIRM BUTTON ===== */
+    .btn-confirm-wrap { text-align: center; padding: 20px 0 0; }
+    .btn-confirm {
+      display: inline-block;
+      font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff !important;
+      background-color: rgba(255,255,255,0.15);
+      border: 2px solid #fff;
+      border-radius: 100px;
+      padding: 12px 32px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn-confirm:hover { background-color: rgba(255,255,255,0.3); }
+
+    /* ===== DETAILS SECTION ===== */
+    .details-section {
+      border: 1px solid #eee;
+      padding: 40px 0;
+    }
+    .details-section .container { padding: 20px 0; }
+    .detail-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      text-align: center;
+      padding: 0 5%;
+      line-height: 1.8;
+    }
+    .divider-icon {
+      text-align: center;
+      padding: 10px 0;
+      color: #c1121f;
+      font-size: 24px;
+    }
+
+    /* ===== FORM SECTION ===== */
+    .form-section { padding: 27px 0 9px; }
+    .form-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 25px;
+      text-align: center;
+      padding-bottom: 14px;
+    }
+    .form-arrow {
+      text-align: center;
+      color: #c1121f;
+      font-size: 27px;
+      margin-top: -10px;
+    }
+    /* RSVP custom form */
+    .rsvp-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px 0 40px;
+      text-align: center;
+    }
+    .rsvp-question {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .rsvp-options {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .rsvp-options label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rsvp-options input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #c40000;
+      cursor: pointer;
+    }
+    .btn-rsvp-submit {
+      display: inline-block;
+      font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      background-color: #c40000;
+      border: none;
+      border-radius: 100px;
+      padding: 14px 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-rsvp-submit:hover { background-color: #a00; transform: scale(1.05); }
+    /* RSVP on red background (inside countdown) */
+    .rsvp-on-red .rsvp-options label {
+      color: #fff;
+    }
+    .rsvp-on-red .rsvp-options input[type="radio"] {
+      accent-color: #fff;
+    }
+    .btn-rsvp-submit-white {
+      display: inline-block;
+      font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #c40000;
+      background-color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 14px 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-rsvp-submit-white:hover { background-color: #f0f0f0; transform: scale(1.05); }
+    .rsvp-comment-wrap {
+      margin-bottom: 24px;
+    }
+    .rsvp-comment-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .rsvp-comment {
+      width: 100%;
+      max-width: 340px;
+      padding: 10px 14px;
+      font-family: 'Source Sans Pro', Arial, sans-serif;
+      font-size: 15px;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      resize: vertical;
+      min-height: 60px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .rsvp-comment::placeholder { color: rgba(255,255,255,0.6); }
+    .rsvp-comment:focus { border-color: #fff; }
+    .rsvp-thankyou-white {
+      color: #fff !important;
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      text-align: center;
+      padding: 30px 0;
+      display: none;
+    }
+    .rsvp-thankyou {
+      display: none;
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      color: #c40000;
+      text-align: center;
+      padding: 30px 0;
+    }
+    .celebrate-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 41px;
+      color: #c1121f;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    /* ===== CLOSING SECTION ===== */
+    .closing-section { padding: 27px 0 40px; }
+    .closing-section .container { width: 91%; }
+    .closing-photo {
+      text-align: center;
+    }
+    .closing-photo img {
+      height: 622px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      margin: 0 auto;
+    }
+    .closing-names {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 25px;
+      color: #333;
+      text-align: center;
+      padding-bottom: 12px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 980px) {
+      .col-third { width: 100%; margin-right: 0; margin-bottom: 20px; }
+      .row { flex-direction: column; }
+      .container { width: 90%; }
+      .countdown-timer .cd-value { font-size: 42px; line-height: 42px; }
+      .countdown-timer .cd-sep { font-size: 42px; line-height: 42px; }
+    }
+    @media (max-width: 767px) {
+      .section { padding: 30px 0; }
+      .wedding-heading { font-size: 44px; }
+      .headline-main { font-size: 30px; }
+      .headline-script { font-size: 48px; left: 70%; top: 160%; }
+      .countdown-timer .cd-value { font-size: 32px; line-height: 32px; }
+      .countdown-timer .cd-sep { font-size: 32px; line-height: 32px; }
+      .countdown-timer .cd-section { width: 20%; }
+      .hero-image-wrap img { height: 401px; }
+      .closing-photo img { height: 401px; }
+      .hero-names { font-size: 48px; }
+      .hero-date { font-size: 18px; }
+      .fingerprint { width: 100px; }
+      .invitation-text { padding: 0 5%; }
+    }
+    @media (max-width: 479px) {
+      .wedding-heading { font-size: 36px; }
+      .closing-photo img { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== SECTION 1: HERO — NAMES + FINGERPRINTS ===== -->
+  <div class="section hero-section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="fingerprint-heart-container">
+        <h1 class="hero-names animate zoom">Александр + Юлия</h1>
+        <p class="hero-date animate zoom" style="transition-delay: 0.4s;">04 | 24 | 2026</p>
+        <div class="fingerprint-wrapper">
+          <img src="https://www.wedding-invitation.website/wp-content/uploads/2025/05/fingerprint-7206504_1280.png" alt="Left fingerprint" class="fingerprint fingerprint-left">
+          <img src="https://www.wedding-invitation.website/wp-content/uploads/2025/05/fingerprint-7206504_1280.png" alt="Right fingerprint" class="fingerprint fingerprint-right">
+        </div>
+      </div>
+
+      <!-- Hero Photo -->
+      <div class="hero-image-wrap" style="margin-top: 30px;">
+        <img src="../images/photo_1.jpg" alt="Фото пары">
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: INVITATION HEADING ===== -->
+  <div class="section" style="padding: 30px 0 10px;">
+    <div class="container text-center">
+      <h1 class="wedding-heading animate zoom" id="heading-friends">Дорогая Машенька!</h1>
+      <div class="invitation-text animate fade" style="margin-top: 10px;">
+        <p>С радостью приглашаем вас на нашу свадьбу, которая состоится<br><strong>24 апреля 2026 года</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: LOCATION & TIME ===== -->
+  <div class="section location-section" style="padding: 20px 0;">
+    <div class="container text-center">
+      <h1 class="wedding-heading animate zoom" id="heading-location">Место & Время</h1>
+    </div>
+    <div class="container">
+      <div style="max-width: 500px; margin: 0 auto; padding: 20px 0;">
+        <div class="detail-row animate fade" style="animation-delay: 0.2s;">
+          <p class="detail-label">Дата</p>
+          <p class="detail-value">24.04.2026</p>
+        </div>
+        <div class="detail-row animate fade" style="animation-delay: 0.5s;">
+          <p class="detail-label">Начало</p>
+          <p class="detail-value">в 05:00 PM</p>
+        </div>
+        <div class="detail-row animate fade" style="animation-delay: 0.8s;">
+          <p class="detail-label">Место</p>
+          <p class="detail-value">Ресторан «Mansion»</p>
+        </div>
+        <div class="detail-row animate fade" style="animation-delay: 1.1s;">
+          <p class="detail-value">141 Mansion Ave, Staten Island, NY 10308</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: FULLWIDTH GLASSES IMAGE ===== -->
+  <div class="section-fullwidth animate fade">
+    <div class="fullwidth-image">
+      <img src="https://www.wedding-invitation.website/wp-content/uploads/2025/05/glasses-8470536_1280.jpg" alt="Бокали">
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5: MAP BUTTON ===== -->
+  <div class="section" style="padding: 13px 0 26px;">
+    <div class="container">
+      <div class="button-wrap">
+        <a class="btn-map animate zoom" href="https://maps.app.goo.gl/cYJuNEi2Bb7cjJw96?g_st=it" target="_blank" rel="noopener">Посмотреть на карте</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 6: COUNTDOWN ===== -->
+  <div class="section countdown-section">
+    <div class="container">
+      <!-- Heading -->
+      <div class="headline-block" id="headline">
+        <div class="headline-main" id="mainText">ЖДЁМ ВАС ЧЕРЕЗ</div>
+      </div>
+
+      <!-- Countdown Timer -->
+      <div class="countdown-timer" id="countdown">
+        <div class="cd-section">
+          <p class="cd-value" id="cd-days">---</p>
+          <p class="cd-label">Дней</p>
+        </div>
+        <div class="cd-sep"><p>:</p></div>
+        <div class="cd-section">
+          <p class="cd-value" id="cd-hours">--</p>
+          <p class="cd-label">Часов</p>
+        </div>
+        <div class="cd-sep"><p>:</p></div>
+        <div class="cd-section">
+          <p class="cd-value" id="cd-minutes">--</p>
+          <p class="cd-label">Минут</p>
+        </div>
+        <div class="cd-sep"><p>:</p></div>
+        <div class="cd-section">
+          <p class="cd-value" id="cd-seconds">--</p>
+          <p class="cd-label">Секунд</p>
+        </div>
+      </div>
+
+      <div class="countdown-text">
+        <p>Пожалуйста, подтвердите своё присутствие на нашей свадьбе. Мы с нетерпением ждём вас!</p>
+      </div>
+
+      <!-- RSVP form inside countdown section -->
+      <form class="rsvp-form rsvp-on-red animate zoom" id="rsvp-form"
+            action="https://docs.google.com/forms/d/e/1FAIpQLScJ5ZH4efeRy-jAmuAHjr_ipgFwtT3k7K5kRtkDjGhoooIVww/formResponse"
+            method="POST" target="hidden_iframe">
+        <input type="hidden" name="entry.598525638" id="guest-name-field" value="Машенька">
+        <div class="rsvp-options">
+          <label><input type="radio" name="entry.283783573" value="Да" required> Да</label>
+          <label><input type="radio" name="entry.283783573" value="Нет"> Нет</label>
+        </div>
+        <div class="rsvp-comment-wrap">
+          <textarea name="entry.899093213" class="rsvp-comment" placeholder="Комментарий (необязательно)" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn-rsvp-submit-white">Отправить ответ</button>
+      </form>
+      <div class="rsvp-thankyou rsvp-thankyou-white" id="rsvp-thankyou">Спасибо за ответ! 💕</div>
+      <iframe name="hidden_iframe" style="display:none;"></iframe>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 9: CLOSING ===== -->
+  <div class="section closing-section">
+    <div class="container" style="max-width: 91%;">
+      <div class="closing-names">
+        <p>С уважением, Александр и Юлия!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // === Countdown Timer ===
+    (function () {
+      // Wedding date: April 24, 2026 at 17:00 EST (UTC-4)
+      const weddingDate = new Date('2026-04-24T17:00:00-04:00').getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
+
+        if (diff <= 0) {
+          document.getElementById('cd-days').textContent = '0';
+          document.getElementById('cd-hours').textContent = '0';
+          document.getElementById('cd-minutes').textContent = '0';
+          document.getElementById('cd-seconds').textContent = '0';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+
+    // === Scroll Animations ===
+    (function () {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.animate').forEach(el => {
+        observer.observe(el);
+      });
+    })();
+
+    // === "ЖДЁМ ВАС ЧЕРЕЗ" heading animation ===
+    document.addEventListener("DOMContentLoaded", function () {
+      const mainText = document.getElementById('mainText');
+
+      function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (rect.top < window.innerHeight && rect.bottom >= 0);
+      }
+
+      let hasAnimated = false;
+      function checkAndAnimate() {
+        const block = document.getElementById('headline');
+        if (isInViewport(block) && !hasAnimated) {
+          hasAnimated = true;
+          mainText.classList.add('visible');
+        }
+      }
+
+      window.addEventListener('load', checkAndAnimate);
+      window.addEventListener('scroll', checkAndAnimate);
+    });
+
+    // Google Forms handles submission automatically via the embedded iframe
+
+    // === RSVP form submit — show thank-you message ===
+    document.getElementById('rsvp-form').addEventListener('submit', function () {
+      var form = this;
+      setTimeout(function () {
+        form.style.display = 'none';
+        document.getElementById('rsvp-thankyou').style.display = 'block';
+      }, 500);
+    });
+  </script>
+
+</body>
+</html>

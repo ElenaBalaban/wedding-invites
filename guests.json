@@ -19,5 +19,8 @@
   { "id": 18, "names": "Владимир и Наталья", "phone": "9292006666", "url": "https://elenabalaban.github.io/wedding-invites/guests/18-vladimir", "slug": "vladimir" },
   { "id": 19, "names": "Андрей и Алёна", "phone": "3479250746", "url": "https://elenabalaban.github.io/wedding-invites/guests/19-andrey-i-alyona" },
   { "id": 20, "names": "Мамуля Лариса и Даниэль", "phone": "7185418127", "url": "https://elenabalaban.github.io/wedding-invites/guests/20-mamulya-larisa-i-daniel" },
-  { "id": 21, "names": "Мамочка Лена", "phone": "5168207283", "url": "https://elenabalaban.github.io/wedding-invites/guests/21-mamochka-lena" }
+  { "id": 21, "names": "Мамочка Лена", "phone": "5168207283", "url": "https://elenabalaban.github.io/wedding-invites/guests/21-mamochka-lena" },
+  { "id": 22, "names": "Алексей, Юлия, Кирилл, Анастасия и Елизавета", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/22-aleksey-yuliya-kirill-anastasiya-i-elizaveta" },
+  { "id": 23, "names": "Илья, Анна и Мая", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/23-ilya-anna-i-maya" },
+  { "id": 24, "names": "Машенька", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/24-mashenka" }
 ]

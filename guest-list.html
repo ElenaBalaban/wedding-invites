@@ -167,7 +167,10 @@
       { "id": 18, "names": "Владимир и Наталья", "phone": "9292006666", "url": "https://elenabalaban.github.io/wedding-invites/guests/18-vladimir" },
       { "id": 19, "names": "Андрей и Алёна", "phone": "3479250746", "url": "https://elenabalaban.github.io/wedding-invites/guests/19-andrey-i-alyona" },
       { "id": 20, "names": "Мамуля Лариса и Даниэль", "phone": "7185418127", "url": "https://elenabalaban.github.io/wedding-invites/guests/20-mamulya-larisa-i-daniel" },
-      { "id": 21, "names": "Мамочка Лена", "phone": "5168207283", "url": "https://elenabalaban.github.io/wedding-invites/guests/21-mamochka-lena" }
+      { "id": 21, "names": "Мамочка Лена", "phone": "5168207283", "url": "https://elenabalaban.github.io/wedding-invites/guests/21-mamochka-lena" },
+      { "id": 22, "names": "Алексей, Юлия, Кирилл, Анастасия и Елизавета", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/22-aleksey-yuliya-kirill-anastasiya-i-elizaveta" },
+      { "id": 23, "names": "Илья, Анна и Мая", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/23-ilya-anna-i-maya" },
+      { "id": 24, "names": "Машенька", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/24-mashenka" }
     ];
 
     function copyText(text, btn) {
@@ -186,13 +189,15 @@
 
     guests.forEach(g => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="col-name"><span class="num">${g.id}.</span> ${g.names}</td>
-        <td>
+      const phoneRow = g.phone ? `
           <div class="info-row">
             <span class="info-val">${g.phone}</span>
             <button class="copy-btn" onclick="copyText('${g.phone}', this)">копировать</button>
-          </div>
+          </div>` : '';
+      tr.innerHTML = `
+        <td class="col-name"><span class="num">${g.id}.</span> ${g.names}</td>
+        <td>
+          ${phoneRow}
           <div class="info-row">
             <a href="${g.url}" target="_blank" class="info-val">${slug(g.url)}</a>
             <button class="copy-btn" onclick="copyText('${g.url}', this)">копировать</button>
