@@ -131,6 +131,34 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 20px auto 0;
+      padding: 16px 10px;
+    }
+    .stat-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 14px 24px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-box .stat-num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 32px;
+      font-weight: 700;
+    }
+    .stat-box .stat-label {
+      font-size: 13px;
+      color: #777;
+      margin-top: 2px;
+    }
+    .stat-yes .stat-num { color: #2e7d32; }
+    .stat-no .stat-num { color: #c62828; }
+
     .refresh-note {
       text-align: center;
       padding: 16px;
@@ -240,6 +268,33 @@
 
         html += '</tbody></table>';
         document.getElementById('content').innerHTML = html;
+
+        // Count people (not invitations) per answer
+        function countPeople(name) {
+          // "Алексей, Юлия, Кирилл, Анастасия и Елизавета" → 5
+          const expanded = name.replace(/ и /g, ', ');
+          return expanded.split(',').map(s => s.trim()).filter(s => s.length > 0).length;
+        }
+
+        let yesCount = 0, noCount = 0;
+        guests.forEach(g => {
+          const n = countPeople(g.name);
+          if (g.answer === 'Да') yesCount += n;
+          else if (g.answer === 'Нет') noCount += n;
+        });
+
+        const statsHtml = `
+          <div class="stats">
+            <div class="stat-box stat-yes">
+              <div class="stat-num">${yesCount}</div>
+              <div class="stat-label">Ответили Да</div>
+            </div>
+            <div class="stat-box stat-no">
+              <div class="stat-num">${noCount}</div>
+              <div class="stat-label">Ответили Нет</div>
+            </div>
+          </div>`;
+        document.getElementById('content').insertAdjacentHTML('beforeend', statsHtml);
 
       } catch (err) {
         console.error(err);
