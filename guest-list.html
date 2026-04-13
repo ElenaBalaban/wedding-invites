@@ -120,6 +120,24 @@
     .copy-btn:hover { border-color: #c40000; color: #c40000; }
     .copy-btn.copied { border-color: #2e7d32; color: #2e7d32; }
 
+    .refresh-btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 24px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.5);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+      letter-spacing: 0.5px;
+    }
+    .refresh-btn:hover { background: rgba(255,255,255,0.32); }
+    .refresh-btn:active { transform: scale(0.96); }
+
     @media (max-width: 600px) {
       .header h1 { font-size: 36px; }
       .header { padding: 30px 16px 20px; }
@@ -131,6 +149,7 @@
   <div class="header">
     <h1>Список гостей</h1>
     <p>Свадьба Александра и Юлии — 24 апреля 2026</p>
+    <button class="refresh-btn" onclick="location.reload(true)">↻ Обновить</button>
   </div>
 
   <div class="table-wrap">
@@ -170,7 +189,10 @@
       { "id": 21, "names": "Мамочка Лена", "phone": "5168207283", "url": "https://elenabalaban.github.io/wedding-invites/guests/21-mamochka-lena" },
       { "id": 22, "names": "Алексей, Юлия, Кирилл, Анастасия и Елизавета", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/22-aleksey-yuliya-kirill-anastasiya-i-elizaveta" },
       { "id": 23, "names": "Илья, Анна и Мая", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/23-ilya-anna-i-maya" },
-      { "id": 24, "names": "Машенька", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/24-mashenka" }
+      { "id": 24, "names": "Машенька", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/24-mashenka" },
+      { "id": 25, "names": "Андрей и Светлана", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/25-andrey-i-svetlana" },
+      { "id": 26, "names": "Кристиночка", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/26-kristinochka" },
+      { "id": 27, "names": "Лёня", "phone": "", "url": "https://elenabalaban.github.io/wedding-invites/guests/27-lyonya" }
     ];
 
     function copyText(text, btn) {
